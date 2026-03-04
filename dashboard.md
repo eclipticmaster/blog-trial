@@ -1,10 +1,10 @@
 ---
 layout: default
-title: Dashboard
-permalink: /dashboard/
+title: Stress Levels
+permalink: /stress/
 ---
 
-## PhD Dashboard
+## Stress Levels
 
 ### Current Stress Level
 
@@ -23,6 +23,8 @@ permalink: /dashboard/
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
+document.addEventListener("DOMContentLoaded", function () {
+
   const current = {{ site.data.current_stress | jsonify }};
   const history = {{ site.data.stress_history | jsonify }};
 
@@ -31,7 +33,8 @@ permalink: /dashboard/
       3 * current.tasks_due_3_days +
       2 * current.meetings_this_week;
 
-  const normalized = Math.min(currentStress, 100);
+  // const normalized = Math.min(currentStress, 100);
+  const normalized = 60;
 
   const bar = document.getElementById("stress-bar");
   const label = document.getElementById("stress-label");
@@ -49,18 +52,5 @@ permalink: /dashboard/
     label.textContent = "High stress";
   }
 
-  const ctx = document.getElementById('stressChart').getContext('2d');
-
-  new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: history.map(h => h.week),
-      datasets: [{
-        label: 'Weekly Stress',
-        data: history.map(h => h.stress),
-        fill: false,
-        tension: 0.2
-      }]
-    }
-  });
+});
 </script>
